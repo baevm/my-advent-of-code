@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 
 public class Day01 : BaseDay {
     private readonly string _input;
