@@ -1,6 +1,7 @@
 namespace AdventOfCode;
 
-public class Day02 : BaseDay {
+public class Day02 : BaseDay
+{
     private readonly string _input;
 
     const int DRAW = 3;
@@ -41,15 +42,18 @@ public class Day02 : BaseDay {
             {SCISSORS, PAPER},
          };
 
-    public Day02() {
+    public Day02()
+    {
         _input = File.ReadAllText(InputFilePath);
     }
 
-    public override ValueTask<string> Solve_1() {
+    public override ValueTask<string> Solve_1()
+    {
         var resultScore = 0;
         var combinations = _input.Split('\n');
 
-        foreach (var combo in combinations) {
+        foreach (var combo in combinations)
+        {
             var elfs = combo[0].ToString();
             var my = combo[2].ToString();
 
@@ -57,12 +61,14 @@ public class Day02 : BaseDay {
             resultScore += scores[items[my]];
 
             // Check for draw
-            if (items[elfs] == items[my]) {
+            if (items[elfs] == items[my])
+            {
                 resultScore += DRAW;
             }
 
             // Check if i win the round
-            if (my_winning_combos[items[elfs]] == items[my]) {
+            if (my_winning_combos[items[elfs]] == items[my])
+            {
                 resultScore += WIN;
             }
         }
@@ -70,7 +76,8 @@ public class Day02 : BaseDay {
         return new ValueTask<string>($"{resultScore}");
     }
 
-    public override ValueTask<string> Solve_2() {
+    public override ValueTask<string> Solve_2()
+    {
         var resultScore = 0;
         const string draw_char = "Y";
         const string win_char = "Z";
@@ -78,19 +85,23 @@ public class Day02 : BaseDay {
 
         var combinations = _input.Split('\n');
 
-        foreach (var combo in combinations) {
+        foreach (var combo in combinations)
+        {
             var elfs = combo[0].ToString();
             var end = combo[2].ToString();
 
-            if (end == draw_char) {
+            if (end == draw_char)
+            {
                 resultScore += DRAW;
                 resultScore += scores[items[elfs]];
             }
-            else if (end == win_char) {
+            else if (end == win_char)
+            {
                 resultScore += WIN;
                 resultScore += scores[my_winning_combos[items[elfs]]];
             }
-            else if (end == lose_char) {
+            else if (end == lose_char)
+            {
                 resultScore += scores[my_losing_combos[items[elfs]]];
             }
         }
