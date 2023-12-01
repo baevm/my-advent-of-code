@@ -1,37 +1,17 @@
 package main
 
 import (
-	"bufio"
+	"2023/helpers"
 	"fmt"
 	"log"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
 )
 
-func openTask() ([]string, error) {
-	file, err := os.Open("./task.txt")
-
-	if err != nil {
-		return nil, err
-	}
-
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	return lines, scanner.Err()
-}
-
 // https://adventofcode.com/2023/day/1
 func main() {
-	lines, err := openTask()
+	lines, err := helpers.OpenTask("./task.txt")
 
 	if err != nil {
 		log.Fatalln(err)
