@@ -17,24 +17,16 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	res1, err := solve_1(lines)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
+	res1 := solve_1(lines)
 
 	fmt.Println("1. Result: ", res1)
 
-	res2, err := solve_2(lines)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
+	res2 := solve_2(lines)
 
 	fmt.Println("2. Result: ", res2)
 }
 
-func solve_1(lines []string) (int, error) {
+func solve_1(lines []string) int {
 	var res = 0
 	regex := regexp.MustCompile("[0-9]+")
 
@@ -53,16 +45,16 @@ func solve_1(lines []string) (int, error) {
 		newNum, err := strconv.Atoi(newNumStr)
 
 		if err != nil {
-			return 0, err
+			panic(err)
 		}
 
 		res += newNum
 	}
 
-	return res, nil
+	return res
 }
 
-func solve_2(lines []string) (int, error) {
+func solve_2(lines []string) int {
 	var res = 0
 
 	regex := regexp.MustCompile(`(?i:(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)|[0-9])`)
@@ -114,11 +106,11 @@ func solve_2(lines []string) (int, error) {
 		newNum, err := strconv.Atoi(newNumStr)
 
 		if err != nil {
-			return 0, err
+			panic(err)
 		}
 
 		res += newNum
 	}
 
-	return res, nil
+	return res
 }

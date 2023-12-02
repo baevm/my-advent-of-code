@@ -16,24 +16,16 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	res1, err := solve_1(lines)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
+	res1 := solve_1(lines)
 
 	fmt.Println("1. Result: ", res1)
 
-	res2, err := solve_2(lines)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
+	res2 := solve_2(lines)
 
 	fmt.Println("2. Result: ", res2)
 }
 
-func solve_1(lines []string) (int, error) {
+func solve_1(lines []string) int {
 	res := 0
 
 	maxAmounts := map[string]int{
@@ -67,7 +59,7 @@ func solve_1(lines []string) (int, error) {
 				amount, err := strconv.Atoi(amountStr)
 
 				if err != nil {
-					return 0, err
+					panic(err)
 				}
 
 				if maxAmount, isExist := maxAmounts[cubeColor]; isExist && amount > maxAmount {
@@ -79,10 +71,10 @@ func solve_1(lines []string) (int, error) {
 
 	}
 
-	return res, nil
+	return res
 }
 
-func solve_2(lines []string) (int, error) {
+func solve_2(lines []string) int {
 	res := 0
 
 	for _, line := range lines {
@@ -112,7 +104,7 @@ func solve_2(lines []string) (int, error) {
 				amount, err := strconv.Atoi(amountStr)
 
 				if err != nil {
-					return 0, err
+					panic(err)
 				}
 
 				maxAmounts[cubeColor] = max(maxAmounts[cubeColor], amount)
@@ -128,7 +120,7 @@ func solve_2(lines []string) (int, error) {
 		res += powerSet
 	}
 
-	return res, nil
+	return res
 }
 
 func max(num1 int, num2 int) int {
