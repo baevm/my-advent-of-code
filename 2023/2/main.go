@@ -123,14 +123,6 @@ func solve_2(lines []string) int {
 	return res
 }
 
-func max(num1 int, num2 int) int {
-	if num1 > num2 {
-		return num1
-	}
-
-	return num2
-}
-
 func getGameId(game []string) int {
 	gameName := strings.Fields(game[0]) // ["Game", "52"]
 	gameIdStr := gameName[1]            // "52"
