@@ -23,3 +23,13 @@ func OpenTask(path string) ([]string, error) {
 
 	return lines, scanner.Err()
 }
+
+func OpenTaskAsString(path string) (string, error) {
+	byteArr, err := os.ReadFile(path)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(byteArr), nil
+}
