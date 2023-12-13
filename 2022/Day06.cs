@@ -2,8 +2,7 @@ namespace AdventOfCode;
 
 public class Day06 : BaseDay {
     private readonly string _input;
-    private readonly string[] rows;
-
+    
     public Day06() {
         _input = File.ReadAllText(InputFilePath);
     }
