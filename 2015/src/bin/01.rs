@@ -1,3 +1,4 @@
+// https://adventofcode.com/2015/day/1
 advent_of_code::solution!(1);
 
 pub fn part_one(input: &str) -> Option<i64> {
