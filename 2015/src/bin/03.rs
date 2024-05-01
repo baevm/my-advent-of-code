@@ -1,5 +1,6 @@
 use std::collections::HashSet;
 
+// https://adventofcode.com/2015/day/3
 advent_of_code::solution!(3);
 
 #[derive(Eq, Hash, PartialEq, Copy, Clone)]
