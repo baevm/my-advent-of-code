@@ -2,7 +2,117 @@ use std::collections::HashMap;
 
 advent_of_code::solution!(7);
 
-fn solve<'a, 'b>(input: &'a str, char_signals: &'b mut HashMap<&'a str, u16>) -> Option<u16> {
+struct Signals {
+    wires: HashMap<String, u16>,
+}
+
+impl Signals {
+    fn default() -> Self {
+        Self {
+            wires: HashMap::new(),
+        }
+    }
+
+    fn add(&mut self, signal: &str, end: &str) {
+        let is_signal_numeric = is_numeric_str(signal);
+
+        if self.wires.contains_key(end) {
+            return;
+        }
+
+        if is_signal_numeric {
+            let signal: u16 = signal.parse().unwrap();
+            self.wires.insert(end.to_string(), signal);
+        } else {
+            let ch_signal = self.wires.get(signal);
+
+            match ch_signal {
+                Some(sig) => {
+                    self.wires.insert(end.to_string(), *sig);
+                }
+                None => return,
+            }
+        }
+    }
+
+    fn signal_not(&mut self, start: &str, end: &str) {
+        let ch1_signal = self.wires.get(start);
+
+        if ch1_signal.is_none() {
+            return;
+        }
+
+        let res = !ch1_signal.unwrap();
+        self.wires.insert(end.to_string(), res);
+    }
+
+    fn signal_or(&mut self, left: &str, right: &str, end: &str) {
+        let ch1 = self.wires.get(left);
+        let ch2 = self.wires.get(right);
+
+        if ch1.is_none() || ch2.is_none() {
+            return;
+        }
+
+        let res = ch1.unwrap() | ch2.unwrap();
+        self.wires.insert(end.to_string(), res);
+    }
+
+    fn signal_and(&mut self, left: &str, right: &str, end: &str) {
+        // AND operation can be like this: 1 AND am -> an
+        let is_ch1_numeric = is_numeric_str(left);
+        let mut ch1 = 0;
+        let mut ch2 = 0;
+
+        if is_ch1_numeric {
+            ch1 = left.parse().unwrap();
+            let ch2_option = self.wires.get(right);
+
+            if ch2_option.is_none() {
+                return;
+            }
+
+            ch2 = *ch2_option.unwrap();
+        } else {
+            let ch1_option = self.wires.get(left);
+            let ch2_option = self.wires.get(right);
+
+            if ch1_option.is_none() || ch2_option.is_none() {
+                return;
+            }
+
+            ch1 = *ch1_option.unwrap();
+            ch2 = *ch2_option.unwrap();
+        }
+
+        let res = ch1 & ch2;
+        self.wires.insert(end.to_string(), res);
+    }
+
+    fn signal_lshift(&mut self, left: &str, value: &u16, end: &str) {
+        let ch1 = self.wires.get(left);
+
+        if ch1.is_none() {
+            return;
+        }
+
+        let res = ch1.unwrap() << value;
+        self.wires.insert(end.to_string(), res);
+    }
+
+    fn signal_rshift(&mut self, left: &str, value: &u16, end: &str) {
+        let ch1 = self.wires.get(left);
+
+        if ch1.is_none() {
+            return;
+        }
+
+        let res = ch1.unwrap() >> value;
+        self.wires.insert(end.to_string(), res);
+    }
+}
+
+fn solve(input: &str, signals: &mut Signals) -> Option<u16> {
     let lines: Vec<&str> = input.lines().collect();
 
     let mut i = 0;
@@ -18,113 +128,36 @@ fn solve<'a, 'b>(input: &'a str, char_signals: &'b mut HashMap<&'a str, u16>) ->
         // 4 == NOT x -> h
         // 5 == x LSHIFT 2 -> f
         match args.len() {
-            3 => 'label3: {
-                let result_ch = args[2];
-                let is_signal_numeric = is_numeric_str(args[0]);
-
-                if char_signals.contains_key(result_ch) {
-                    break 'label3;
-                }
-
-                if is_signal_numeric {
-                    let signal: u16 = args[0].parse().unwrap();
-                    char_signals.insert(result_ch, signal);
-                } else {
-                    let ch_signal = char_signals.get(args[0]);
-
-                    match ch_signal {
-                        Some(sig) => {
-                            char_signals.insert(result_ch, *sig);
-                        }
-                        None => break 'label3,
-                    }
-                }
+            3 => {
+                let signal = args[0];
+                let end = args[2];
+                signals.add(signal, end)
             }
-            4 => 'label4: {
-                let operation = args[0];
-                let ch1_signal = char_signals.get(args[1]);
-
-                if ch1_signal.is_none() {
-                    break 'label4;
-                }
-
-                let result_ch = args[3];
-
-                match operation {
-                    "NOT" => {
-                        let res = !ch1_signal.unwrap();
-                        char_signals.insert(result_ch, res);
-                    }
-                    _ => unreachable!(),
-                }
+            4 => {
+                let start = args[1];
+                let end = args[3];
+                signals.signal_not(start, end)
             }
-            5 => 'label5: {
+            5 => {
+                let left = args[0];
                 let operation = args[1];
-                let result_ch = args[4];
+                let right = args[2];
+                let end = args[4];
 
                 match operation {
                     "AND" => {
-                        // AND operation can be like this: 1 AND am -> an
-                        let is_ch1_numeric = is_numeric_str(args[0]);
-                        let mut ch1 = 0;
-                        let mut ch2 = 0;
-
-                        if is_ch1_numeric {
-                            ch1 = args[0].parse().unwrap();
-                            let ch2_option = char_signals.get(args[2]);
-
-                            if ch2_option.is_none() {
-                                break 'label5;
-                            }
-
-                            ch2 = *ch2_option.unwrap();
-                        } else {
-                            let ch1_option = char_signals.get(args[0]);
-                            let ch2_option = char_signals.get(args[2]);
-
-                            if ch1_option.is_none() || ch2_option.is_none() {
-                                break 'label5;
-                            }
-
-                            ch1 = *ch1_option.unwrap();
-                            ch2 = *ch2_option.unwrap();
-                        }
-
-                        let res = ch1 & ch2;
-                        char_signals.insert(result_ch, res);
+                        signals.signal_and(left, right, end);
                     }
                     "OR" => {
-                        let ch1 = char_signals.get(args[0]);
-                        let ch2 = char_signals.get(args[2]);
-
-                        if ch1.is_none() || ch2.is_none() {
-                            break 'label5;
-                        }
-
-                        let res = ch1.unwrap() | ch2.unwrap();
-                        char_signals.insert(result_ch, res);
+                        signals.signal_or(left, right, end);
                     }
                     "LSHIFT" => {
-                        let ch1 = char_signals.get(args[0]);
-
-                        if ch1.is_none() {
-                            break 'label5;
-                        }
-
-                        let ch2: u16 = args[2].parse().unwrap();
-                        let res = ch1.unwrap() << ch2;
-                        char_signals.insert(result_ch, res);
+                        let value: u16 = right.parse().unwrap();
+                        signals.signal_lshift(left, &value, end);
                     }
                     "RSHIFT" => {
-                        let ch1 = char_signals.get(args[0]);
-
-                        if ch1.is_none() {
-                            break 'label5;
-                        }
-
-                        let ch2: u16 = args[2].parse().unwrap();
-                        let res = ch1.unwrap() >> ch2;
-                        char_signals.insert(result_ch, res);
+                        let value: u16 = right.parse().unwrap();
+                        signals.signal_rshift(left, &value, end);
                     }
                     _ => unreachable!(),
                 }
@@ -138,26 +171,26 @@ fn solve<'a, 'b>(input: &'a str, char_signals: &'b mut HashMap<&'a str, u16>) ->
             i += 1;
         }
 
-        if char_signals.contains_key("a") {
-            return char_signals.get("a").copied();
+        if signals.wires.contains_key("a") {
+            return signals.wires.get("a").copied();
         }
     }
 }
 
 pub fn part_one(input: &str) -> Option<u16> {
-    let mut char_signals: HashMap<&str, u16> = HashMap::new();
-    solve(input, &mut char_signals)
+    let mut signals = Signals::default();
+    solve(input, &mut signals)
 }
 
 pub fn part_two(input: &str) -> Option<u16> {
-    let mut char_signals: HashMap<&str, u16> = HashMap::new();
+    let mut signals = Signals::default();
 
-    let a_signal = solve(input, &mut char_signals).unwrap();
+    let a_signal = solve(input, &mut signals).unwrap();
 
-    char_signals.clear();
-    char_signals.insert("b", a_signal);
+    signals.wires.clear();
+    signals.wires.insert("b".to_string(), a_signal);
 
-    solve(input, &mut char_signals)
+    solve(input, &mut signals)
 }
 
 pub fn is_numeric_str(input: &str) -> bool {
