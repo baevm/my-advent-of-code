@@ -84,7 +84,7 @@ func solve_1(document string) int {
 }
 
 func solve_2(document string) int {
-	defer helpers.TimeTrack(time.Now(), "Task 1")
+	defer helpers.TimeTrack(time.Now(), "Task 2")
 
 	directions := strings.Split(document, ", ")
 
