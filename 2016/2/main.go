@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// https://adventofcode.com/2016/day/1
+// https://adventofcode.com/2016/day/2
 func main() {
 	instruction_lines, err := helpers.OpenTask("./task.txt")
 
