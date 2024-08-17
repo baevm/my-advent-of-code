@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// https://adventofcode.com/2016/day/7
+// https://adventofcode.com/2016/day/9
 func main() {
 	puzzle, err := helpers.OpenTaskAsString("./task.txt")
 
