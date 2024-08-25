@@ -1,4 +1,6 @@
-use std::{fs, path::Path};
+use std::path::Path;
+
+use crate::helpers::file::read_lines;
 
 // https://adventofcode.com/2021/day/1
 pub fn solve() {
@@ -49,12 +51,4 @@ fn part2(lines: &Vec<String>) {
         });
 
     println!("Part 2: {}", res);
-}
-
-fn read_lines(filename: &str) -> Vec<String> {
-    fs::read_to_string(filename)
-        .unwrap()
-        .lines()
-        .map(String::from)
-        .collect()
 }

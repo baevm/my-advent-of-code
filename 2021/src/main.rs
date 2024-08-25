@@ -6,6 +6,11 @@ mod days {
     pub mod day2;
 }
 
+mod helpers {
+    pub mod data_structs;
+    pub mod file;
+}
+
 #[derive(Parser)]
 #[command(name = "aoc")]
 #[command(version = "1.0")]
