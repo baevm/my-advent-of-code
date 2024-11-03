@@ -15,7 +15,7 @@ public class Day1 : ISolver
 
     public void Solve_1()
     {
-        var res = _input.ToList().Select(int.Parse).Aggregate((a, b) => a + b);
+        var res = _input.Select(int.Parse).Aggregate((a, b) => a + b);
 
         Console.WriteLine($"Task 1: {res}");
     }
@@ -30,10 +30,8 @@ public class Day1 : ISolver
 
         while (true)
         {
-
             var num = inputInts.ElementAt(idx);
             var newCurr = curr + num;
-
 
             if (seen.Contains(newCurr))
             {

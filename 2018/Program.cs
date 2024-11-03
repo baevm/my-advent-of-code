@@ -23,9 +23,10 @@ class Program
     {
         var days = new Dictionary<string, ISolver> {
             {"1", new Day1()},
+            {"2", new Day2()},
         };
 
-        var dayClass = days[day] ?? throw new ArgumentException($"Invalid day {day}");
+        var dayClass = days.TryGetValue(day, out ISolver? value) ? value : throw new ArgumentException($"Invalid day {day}");
 
         RunWithTime(dayClass.Solve_1, "1");
         RunWithTime(dayClass.Solve_2, "2");
