@@ -56,21 +56,23 @@ public class Day2 : ISolver
 
         foreach (var line in _input)
         {
-            var tolerable = true;
+            var tolerable = false;
             var levels = line.Split(" ").Select(int.Parse).ToList();
-
-            var isIncreasing = levels[0] < levels[1];
-
 
             for (var i = 0; i < levels.Count; i++)
             {
-                var newLevels = new List<int> { };
+                var newLevels = levels.Take(i).Concat(levels.Skip(i + 1)).ToList();
 
                 if (IsSafe(newLevels))
                 {
                     tolerable = true;
                     break;
                 }
+            }
+
+            if (IsSafe(levels) || tolerable)
+            {
+                safeReports += 1;
             }
         }
 
