@@ -25,6 +25,7 @@ class Program
             {"1", new Day1()},
             {"2", new Day2()},
             {"3", new Day3()},
+            {"7", new Day7()},
         };
 
         var dayClass = days.TryGetValue(day, out ISolver? value) ? value : throw new ArgumentException($"Invalid day {day}");
