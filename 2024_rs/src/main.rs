@@ -1,13 +1,15 @@
 use clap::Parser;
-use days::day1;
+use days::{day1, day2};
 
 mod days {
     pub mod day1;
+    pub mod day2;
 }
 
 mod helpers {
     pub mod data_structs;
     pub mod file;
+    pub mod runner;
 }
 
 #[derive(Parser)]
@@ -25,6 +27,7 @@ fn main() {
 
     match cli.day {
         1 => day1::solve(),
+        2 => day2::solve(),
 
         _ => unreachable!(),
     }

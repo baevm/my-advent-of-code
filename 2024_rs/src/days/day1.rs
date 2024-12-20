@@ -1,19 +1,15 @@
-use std::{
-    collections::{BinaryHeap, HashMap},
-    path::Path,
-};
+use std::collections::{BinaryHeap, HashMap};
 
 use itertools::Itertools;
 
-use crate::helpers::file::read_lines;
+use crate::helpers::{file::read_lines, runner::run_with_timing};
 
 // https://adventofcode.com/2024/day/1
 pub fn solve() {
-    let path = Path::new("src/data/01.txt");
-    let lines = read_lines(path.to_str().unwrap());
+    let lines = read_lines("./src/data/01.txt");
 
-    part1(&lines);
-    part2(&lines);
+    run_with_timing(|| part1(&lines), 1);
+    run_with_timing(|| part2(&lines), 2);
 }
 
 fn part1(lines: &Vec<String>) {
