@@ -1,9 +1,10 @@
 use clap::Parser;
-use days::{day1, day2};
+use days::{day1, day2, day3};
 
 mod days {
     pub mod day1;
     pub mod day2;
+    pub mod day3;
 }
 
 mod helpers {
@@ -28,6 +29,7 @@ fn main() {
     match cli.day {
         1 => day1::solve(),
         2 => day2::solve(),
+        3 => day3::solve(),
 
         _ => unreachable!(),
     }

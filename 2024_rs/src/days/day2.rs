@@ -1,8 +1,8 @@
-use crate::helpers::{file::read_lines, runner::run_with_timing};
+use crate::helpers::{file::read_file_lines, runner::run_with_timing};
 
 // https://adventofcode.com/2024/day/2
 pub fn solve() {
-    let lines = read_lines("./src/data/02.txt");
+    let lines = read_file_lines("./src/data/02.txt");
 
     run_with_timing(|| part1(&lines), 1);
     run_with_timing(|| part2(&lines), 2);
