@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::{collections::HashSet, io};
 
 use crate::template::{Day, ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};

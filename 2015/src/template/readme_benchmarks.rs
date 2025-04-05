@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 /// Module that updates the readme me with timing information.
 /// The approach taken is similar to how `aoc-readme-stars` handles this.
 use std::{fs, io};
