@@ -137,7 +137,7 @@ impl Iterator for AllDays {
 /// Creates a [`Day`] value in a const context.
 #[macro_export]
 macro_rules! day {
-    ($day:expr) => {{
+    ($day:expr_2021) => {{
         const _ASSERT: () = assert!(
             $day != 0 && $day <= 25,
             concat!(
