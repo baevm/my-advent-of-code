@@ -27,6 +27,7 @@ dependencies = [
  "pico-args",
  "regex",
  "rust-crypto",
+ "serde_json",
  "tinyjson",
 ]
 
