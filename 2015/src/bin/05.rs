@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::str;
 
-use regex::Regex;
+use fancy_regex::Regex;
 
 // https://adventofcode.com/2015/day/5
 advent_of_code::solution!(5);
@@ -15,7 +15,7 @@ pub fn part_one(input: &str) -> Option<u32> {
 
     for line in lines {
         let vowels_count = vowels.find_iter(line).count();
-        let is_forbidden = forbidden.is_match(line);
+        let is_forbidden = forbidden.is_match(line).unwrap();
         let is_doubles = line.as_bytes().windows(2).any(|x| x[0] == x[1]);
 
         if vowels_count > 2 && !is_forbidden && is_doubles {
