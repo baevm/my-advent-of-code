@@ -1,5 +1,5 @@
 use clap::Parser;
-use days::{day1, day10, day2, day3, day4, day7, day9};
+use days::{day1, day10, day2, day3, day4, day6, day7, day9};
 
 mod days {
     pub mod day1;
@@ -7,6 +7,7 @@ mod days {
     pub mod day2;
     pub mod day3;
     pub mod day4;
+    pub mod day6;
     pub mod day7;
     pub mod day9;
 }
@@ -34,6 +35,7 @@ fn main() {
         2 => day2::solve(),
         3 => day3::solve(),
         4 => day4::solve(),
+        6 => day6::solve(),
         7 => day7::solve(),
         9 => day9::solve(),
         10 => day10::solve(),
